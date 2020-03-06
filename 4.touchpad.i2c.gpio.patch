@@ -1,0 +1,48 @@
+By Marc Serdeliuc
+--- a/DSDT.dsl	2019-11-21 14:36:21.414594502 +0100
++++ b/DSDT.dsl	2019-11-21 15:11:19.202002183 +0100
+@@ -43692,7 +43692,8 @@
+         Return (PKG) /* \PKG3.PKG_ */
+     }
+ 
+-    If (USTP)
++//    If (USTP)
++    If (One)
+     {
+         Scope (_SB.PCI0.I2C0)
+         {
+@@ -58818,6 +58819,15 @@
+                     0x00, ResourceConsumer, _Y34, Exclusive,
+                     )
+             })
++	    Name (SBFG, ResourceTemplate ()
++	    {
++	        GpioInt (Level, ActiveLow, ExclusiveAndWake, PullDefault, 0x0000,
++	            "\\_SB.PCI0.GPI0", 0x00, ResourceConsumer, ,
++	            )
++	            {   // Pin list
++	                0x172
++	            }
++	    })
+             Name (SBFI, ResourceTemplate ()
+             {
+                 Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+@@ -58898,17 +58908,12 @@
+ 
+             Method (_STA, 0, NotSerialized)  // _STA: Status
+             {
+-                If (LOr (LNotEqual (TPIF, One), LAnd (DSYN, One)))
+-                {
+-                    Return (Zero)
+-                }
+-
+                 Return (0x0F)
+             }
+ 
+             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+             {
+-                Return (ConcatenateResTemplate (SBFB, SBFI))
++		Return (ConcatenateResTemplate (SBFB, SBFG))
+             }
+         }
+     }

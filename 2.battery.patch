@@ -1,0 +1,458 @@
+By Marc Serdeliuc
+--- a/DSDT.dsl	2019-11-21 14:36:21.414594502 +0100
++++ b/DSDT.dsl	2019-11-21 18:55:11.588910355 +0100
+@@ -54691,7 +54691,9 @@
+                 B0TM,   16, 
+                 B0C1,   16, 
+                 B0C2,   16, 
+-                B0C3,   16, 
++//                B0C3,   16, 
++		BC00,	8, 
++		BC01,	8, 
+                 B0C4,   16, 
+                 Offset (0xD0), 
+                 B1PN,   16, 
+@@ -54709,11 +54711,15 @@
+                 Offset (0xF0), 
+                 Offset (0xF2), 
+                 Offset (0xF4), 
+-                B0SN,   16, 
++//                B0SN,   16, 
++		BS00, 8,
++		BS01, 8,
+                 Offset (0xF8), 
+                 Offset (0xFA), 
+                 Offset (0xFC), 
+-                B1SN,   16
++//                B1SN,   16
++		SN00, 8,
++		SN01, 8
+             }
+ 
+             Name (SMBF, Zero)
+@@ -54727,9 +54733,12 @@
+                 CDFG,   1, 
+                 ADDR,   8, 
+                 CMDB,   8, 
+-                BDAT,   256, 
++//                BDAT,   256, 
++                BDAY,   256, 
+                 BCNT,   8, 
+                     ,   1, 
++//		BCN0,	8,
++//		BCN1,	1,
+                 ALAD,   7, 
+                 ALD0,   8, 
+                 ALD1,   8
+@@ -54746,6 +54755,7 @@
+                 ADD2,   8, 
+                 CMD2,   8, 
+                 BDA2,   256, 
++//                BDAX,   256, 
+                 BCN2,   8, 
+                     ,   1, 
+                 ALA2,   7, 
+@@ -54770,7 +54780,9 @@
+             Field (SMBX, ByteAcc, NoLock, Preserve)
+             {
+                 Offset (0x04), 
+-                DT2B,   16
++//                DT2B,   16
++		DT00,	8,
++		DT01,	8
+             }
+ 
+             OperationRegion (NSBS, EmbeddedControl, 0x40, 0x04)
+@@ -54867,22 +54879,54 @@
+                 THH0,   8, 
+                 THL1,   8, 
+                 THH1,   8, 
+-                B0VL,   16, 
+-                B0RC,   16, 
+-                B0FC,   16, 
+-                B0MD,   16, 
+-                B0ST,   16, 
+-                B0CC,   16, 
+-                B0DC,   16, 
+-                B0DV,   16, 
+-                B1VL,   16, 
+-                B1RC,   16, 
+-                B1FC,   16, 
+-                B1MD,   16, 
+-                B1ST,   16, 
+-                B1CC,   16, 
+-                B1DC,   16, 
+-                B1DV,   16
++//                B0VL,   16, 
++		B0V0,	8,
++		B0V1,	8,
++//                B0RC,   16, 
++                B0R0,   8, 
++                B0R1,   8, 
++//                B0FC,   16, 
++                B0F0,   8, 
++                B0F1,   8, 
++//                B0MD,   16, 
++                B0M0,   8, 
++                B0M1,   8, 
++//                B0ST,   16, 
++                B0S0,   8, 
++                B0S1,   8, 
++//                B0CC,   16, 
++                BCC0,   8, 
++                BCC1,   8, 
++//                B0DC,   16, 
++                BD0A,   8, 
++                BD0B,   8, 
++//                B0DV,   16, 
++                B0D0,   8, 
++                B0D1,   8, 
++//                B1VL,   16, 
++                B1V0,   8, 
++                B1V1,   8, 
++//                B1RC,   16, 
++                B1R0,   8, 
++                B1R1,   8, 
++//                B1FC,   16, 
++                B1F0,   8, 
++                B1F1,   8, 
++//                B1MD,   16, 
++                B1M0,   8, 
++                B1M1,   8, 
++//                B1ST,   16, 
++                B1S0,   8, 
++                B1S1,   8, 
++//                B1CC,   16, 
++                CC00,   8, 
++                CC01,   8, 
++//                B1DC,   16, 
++                B1D0,   8, 
++                B1D1,   8, 
++//                B1DV,   16
++                BDV0,   8, 
++                BDV1,   8
+             }
+ 
+             Method (_INI, 0, NotSerialized)  // _INI: Initialize
+@@ -54902,6 +54946,47 @@
+                     Store (Arg1, ECFL) /* \_SB_.PCI0.LPCB.EC0_.ECFL */
+                 }
+             }
++ Method (RE1B, 1, NotSerialized)
++ {
++     OperationRegion(ERAM, EmbeddedControl, Arg0, 1)
++     Field(ERAM, ByteAcc, NoLock, Preserve) { BYTE, 8 }
++     Return(BYTE)
++ }
++ Method (RECB, 2, Serialized)
++ {
++     ShiftRight(Arg1, 3, Arg1)
++     Name(TEMP, Buffer(Arg1) { })
++     Add(Arg0, Arg1, Arg1)
++     Store(0, Local0)
++     While (LLess(Arg0, Arg1))
++     {
++         Store(RE1B(Arg0), Index(TEMP, Local0))
++         Increment(Arg0)
++         Increment(Local0)
++     }
++     Return(TEMP)
++ }
++Method (WE1B, 2, NotSerialized)
++{
++    OperationRegion(ERAM, EmbeddedControl, Arg0, 1)
++    Field(ERAM, ByteAcc, NoLock, Preserve) { BYTE, 8 }
++    Store(Arg1, BYTE)
++}
++Method (WECB, 3, Serialized)
++{
++    ShiftRight(Arg1, 3, Arg1)
++    Name(TEMP, Buffer(Arg1) { })
++    Store(Arg2, TEMP)
++    Add(Arg0, Arg1, Arg1)
++    Store(0, Local0)
++    While (LLess(Arg0, Arg1))
++    {
++        WE1B(Arg0, DerefOf(Index(TEMP, Local0)))
++        Increment(Arg0)
++        Increment(Local0)
++    }
++}
++
+         }
+     }
+ 
+@@ -55552,7 +55637,8 @@
+                     }
+                 }
+ 
+-                Store (Zero, BDAT) /* \_SB_.PCI0.LPCB.EC0_.BDAT */
++//		Store (Zero, BDAT) /* \_SB_.PCI0.LPCB.EC0_.BDAT */
++                WECB(0x1C,256,Zero) /* \_SB_.PCI0.LPCB.EC0_.BDAT */
+                 Store (Arg0, PRTC) /* \_SB_.PCI0.LPCB.EC0_.PRTC */
+                 Store (SWTC (Arg0), Index (Local0, Zero))
+                 If (LEqual (DerefOf (Index (Local0, Zero)), Zero))
+@@ -55560,13 +55646,15 @@
+                     If (LEqual (Arg0, RDBL))
+                     {
+                         Store (BCNT, Index (Local0, One))
+-                        Store (BDAT, Index (Local0, 0x02))
++//                        Store (B1B2(BCN0,BCN1), Index (Local0, One))
++                        Store (RECB(0x1C,256), Index (Local0, 0x02))
+                     }
+ 
+                     If (LEqual (Arg0, RDWD))
+                     {
+                         Store (0x02, Index (Local0, One))
+-                        Store (DT2B, Index (Local0, 0x02))
++//                        Store (DT2B, Index (Local0, 0x02))
++                        Store (B1B2(DT00,DT01), Index (Local0, 0x02))
+                     }
+ 
+                     If (LEqual (Arg0, RDBT))
+@@ -55635,7 +55723,8 @@
+ 
+             If (LLessEqual (Local2, 0x03E8))
+             {
+-                Store (Zero, BDAT) /* \_SB_.PCI0.LPCB.EC0_.BDAT */
++//		Store (Zero, BDAT) /* \_SB_.PCI0.LPCB.EC0_.BDAT */
++                WECB(0x1C,256,Zero) /* \_SB_.PCI0.LPCB.EC0_.BDAT */
+                 ShiftLeft (Arg1, One, Local3)
+                 Store (Local3, ADDR) /* \_SB_.PCI0.LPCB.EC0_.ADDR */
+                 If (LNotEqual (Arg0, WRQK))
+@@ -55649,12 +55738,15 @@
+                 If (LEqual (Arg0, WRBL))
+                 {
+                     Store (Arg3, BCNT) /* \_SB_.PCI0.LPCB.EC0_.BCNT */
+-                    Store (Arg4, BDAT) /* \_SB_.PCI0.LPCB.EC0_.BDAT */
++//                    Store (Arg3, B1B2(BCN0,BCN1)) /* \_SB_.PCI0.LPCB.EC0_.DT2B */
++//		    Store (Arg4, BDAT) /* \_SB_.PCI0.LPCB.EC0_.BDAT */
++                    WECB(0x1C,256,Arg4) /* \_SB_.PCI0.LPCB.EC0_.BDAT */
+                 }
+ 
+                 If (LEqual (Arg0, WRWD))
+                 {
+-                    Store (Arg4, DT2B) /* \_SB_.PCI0.LPCB.EC0_.DT2B */
++//                    Store (Arg4, DT2B) /* \_SB_.PCI0.LPCB.EC0_.DT2B */
++                    Store (Arg4, B1B2(DT00,DT01)) /* \_SB_.PCI0.LPCB.EC0_.DT2B */
+                 }
+ 
+                 If (LEqual (Arg0, WRBT))
+@@ -56825,12 +56917,14 @@
+                 If (BSLF)
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B1MD, Local0)
++//                    Store (B1MD, Local0)
++                    Store (B1B2(B1M0,B1M1), Local0)
+                 }
+                 Else
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B0MD, Local0)
++//                    Store (B0MD, Local0)
++                    Store (B1B2(B0M0,B0M1), Local0)
+                 }
+ 
+                 Release (CMUT)
+@@ -56857,12 +56951,14 @@
+                 If (BSLF)
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B1DC, Local0)
++//                    Store (B1DC, Local0)
++                    Store (B1B2(B1D0,B1D1), Local0)
+                 }
+                 Else
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B0DC, Local0)
++//                    Store (B0DC, Local0)
++                    Store (B1B2(B0D0,B0D1), Local0)
+                 }
+ 
+                 Release (CMUT)
+@@ -56884,12 +56980,14 @@
+                 If (BSLF)
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B1FC, Local0)
++//                    Store (B1FC, Local0)
++                    Store (B1B2(B1F0,B1F1), Local0)
+                 }
+                 Else
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B0FC, Local0)
++//                    Store (B0FC, Local0)
++                    Store (B1B2(B0F0,B0F1), Local0)
+                 }
+ 
+                 Release (CMUT)
+@@ -56911,12 +57009,14 @@
+                 If (BSLF)
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B1MD, Local0)
++//                    Store (B1MD, Local0)
++                    Store (B1B2(B1M0,B1M1), Local0)
+                 }
+                 Else
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B0MD, Local0)
++//                    Store (B0MD, Local0)
++                    Store (B1B2(B0M0,B0M1), Local0)
+                 }
+ 
+                 Release (CMUT)
+@@ -56943,12 +57043,14 @@
+                 If (BSLF)
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B1DV, Local0)
++//                    Store (B1DV, Local0)
++                    Store (B1B2(BDV0,BDV1), Local0)
+                 }
+                 Else
+                 {
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B0DV, Local0)
++//                    Store (B0DV, Local0)
++                    Store (B1B2(B0D0,B0D1), Local0)
+                 }
+ 
+                 Release (CMUT)
+@@ -56975,11 +57077,15 @@
+             {
+                 If (BSLF)
+                 {
+-                    Store (B1SN, Local0)
++//                    Store (B1SN, Local0)
++//		      Store (B1B2(1S00,1S01), Local0)
++		    Store (B1B2(BS00,BS01), Local0)
+                 }
+                 Else
+                 {
+-                    Store (B0SN, Local0)
++//                    Store (B0SN, Local0)
++//		      Store (B1B2(0S00,0S01), Local0)
++		    Store (B1B2(SN00,SN01), Local0)
+                 }
+             }
+             Else
+@@ -56996,12 +57102,14 @@
+             If (BSLF)
+             {
+                 Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                Store (B1ST, Local0)
++//                Store (B1ST, Local0)
++                Store (B1B2(B1S0,B1S1), Local0)
+             }
+             Else
+             {
+                 Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                Store (B0ST, Local0)
++//                Store (B0ST, Local0)
++                Store (B1B2(B0S0,B0S1), Local0)
+             }
+ 
+             Release (CMUT)
+@@ -57014,12 +57122,14 @@
+             If (BSLF)
+             {
+                 Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                Store (B1CC, Local0)
++//                Store (B1CC, Local0)
++                Store (B1B2(CC00,CC01), Local0)
+             }
+             Else
+             {
+                 Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                Store (B0CC, Local0)
++//                Store (B0CC, Local0)
++                Store (B1B2(BCC0,BCC1), Local0)
+             }
+ 
+             Release (CMUT)
+@@ -57032,12 +57142,14 @@
+             If (BSLF)
+             {
+                 Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                Store (B1RC, Local0)
++//                Store (B1RC, Local0)
++                Store (B1B2(B1R0,B1R1), Local0)
+             }
+             Else
+             {
+                 Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                Store (B0RC, Local0)
++//                Store (B0RC, Local0)
++                Store (B1B2(B0R0,B0R1), Local0)
+             }
+ 
+             Release (CMUT)
+@@ -57055,12 +57167,14 @@
+             If (BSLF)
+             {
+                 Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                Store (B1VL, Local0)
++//                Store (B1VL, Local0)
++                Store (B1B2(B1V0,B1V1), Local0)
+             }
+             Else
+             {
+                 Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                Store (B0VL, Local0)
++//                Store (B0VL, Local0)
++                Store (B1B2(B0V0,B0V1), Local0)
+             }
+ 
+             Release (CMUT)
+@@ -57291,7 +57405,7 @@
+                     }
+                     Else
+                     {
+-                        Store (One, Local0)
++                        Store (Zero, Local0)
+                     }
+                 }
+                 Else
+@@ -57322,7 +57436,8 @@
+                 {
+                     Acquire (CMUT, 0xFFFF)
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Multiply (Local1, B0DV, Local1)
++//                    Multiply (Local1, B0DV, Local1)
++                    Multiply (Local1, B1B2(B0D0,B0D1), Local1)
+                     Release (CMUT)
+                     Multiply (Local2, 0x0A, Local2)
+                 }
+@@ -57368,7 +57483,8 @@
+                 {
+                     Acquire (CMUT, 0xFFFF)
+                     Store (0xC9, BRAH) /* \_SB_.PCI0.LPCB.EC0_.BRAH */
+-                    Store (B0DV, Index (PBST, 0x03))
++//                    Store (B0DV, Index (PBST, 0x03))
++                    Store (B1B2(B0D0,B0D1), Index (PBST, 0x03))
+                     Release (CMUT)
+                     Store (DerefOf (Index (PBST, 0x03)), Local0)
+                     Multiply (DerefOf (Index (PBST, One)), Local0, Index (PBST, One))
+@@ -57464,7 +57580,9 @@
+                     Divide (DerefOf (Index (BIXT, 0x0F)), 0x03E8, Local0, Index (BIXT, 0x0F))
+                 }
+ 
+-                Store (B0C3, Index (BIXT, 0x08))
++//                Store (B0C3, Index (BIXT, 0x08))
++//		  Store (B1B2(0C00,0C01), Index (BIXT, 0x08))
++		Store (B1B2(BC00,BC01), Index (BIXT, 0x08))
+                 Store (0x0001869F, Index (BIXT, 0x09))
+                 Return (BIXT) /* \_SB_.PCI0.LPCB.EC0_.BAT0.BIXT */
+             }
+@@ -59234,5 +59352,6 @@
+             Return (Zero)
+         }
+     }
++    Method (B1B2, 2, NotSerialized) { Return (Or (Arg0, ShiftLeft (Arg1, 8))) }
+ }
+ 

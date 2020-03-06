@@ -1,0 +1,83 @@
+By Marc Serdeliuc
+--- a/DSDT.dsl	2019-11-21 14:36:21.414594502 +0100
++++ b/DSDT.dsl	2019-11-24 13:49:08.018143335 +0100
+@@ -1496,6 +1496,16 @@
+ 
+     Scope (_SB)
+     {
++	Device(ALS0)
++	{
++	    Name(_HID, "ACPI0008")
++	    Name(_CID, "smc-als")
++	    Name(_ALI, 150)
++	    Name(_ALR, Package()
++	    {
++		Package() { 100, 150 },
++	    })
++	}
+         Name (PRSA, ResourceTemplate ()
+         {
+             IRQ (Level, ActiveLow, Shared, )
+@@ -52460,6 +52470,21 @@
+             Name (AQHI, Zero)
+             Name (AQTI, 0x0F)
+             Name (AQNO, Zero)
++	    Method (SKBV, 1, NotSerialized)
++	    {
++		^^KBLV = Arg0 / 16
++		^^PCI0.LPCB.EC0.WRAM (0xBA, 0xC9F0, ^^KBLV)
++		^^PCI0.LPCB.EC0.ST9E (0x1F, 0xFF, Arg0)
++		Return (Arg0)
++	    }
++	    Method (ALSS, 0, NotSerialized)
++	    {
++		Return (^^ALS0._ALI)
++	    }
++	    Method (ALSC, 1, NotSerialized)
++	    {
++	        // This method does nothing
++	    }
+             Method (IANQ, 1, Serialized)
+             {
+                 If (LGreaterEqual (AQNO, 0x10))
+@@ -56171,36 +56196,17 @@
+ 
+         Method (_Q10, 0, NotSerialized)  // _Qxx: EC Query, xx=0x00-0xFF
+         {
+-            If (LEqual (BLCT, Zero))
+-            {
+-                If (ATKP)
+-                {
+-                    ^^^^ATKD.IANE (0x33)
+-                }
+-            }
+-            ElseIf (LEqual (BLCT, One))
++            If (ATKP)
+             {
+-                If (ATKP)
+-                {
+-                    ^^^^ATKD.IANE (0x35)
+-                }
++                ^^^^ATKD.IANE (0x35)
+             }
+         }
+ 
+         Method (_Q11, 0, Serialized)  // _Qxx: EC Query, xx=0x00-0xFF
+         {
+-            If (LGreaterEqual (MSOS (), OSW8))
++            If (ATKP)
+             {
+-                If (LEqual (F8FG, Zero))
+-                {
+-                    Store (One, F8FG) /* \_SB_.PCI0.LPCB.EC0_.F8FG */
+-                    STB2 (0xE0)
+-                    STB2 (0x5B)
+-                }
+-
+-                STB2 (0x19)
+-                STB2 (0x99)
+-                Return (Zero)
++                ^^^^ATKD.IANE (0x61)
+             }
+         }
+ 

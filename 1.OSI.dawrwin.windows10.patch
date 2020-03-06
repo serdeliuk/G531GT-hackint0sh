@@ -1,0 +1,13 @@
+By Marc Serdeliuc
+--- a/DSDT.dsl	2019-11-21 14:36:21.414594502 +0100
++++ b/DSDT.dsl	2019-11-21 14:34:02.991847264 +0100
+@@ -21991,7 +21991,8 @@
+                     Store (0x07DD, OSYS) /* \OSYS */
+                 }
+ 
+-                If (_OSI ("Windows 2015"))
++//                If (_OSI ("Windows 2015"))
++                If(LOr(_OSI("Darwin"),_OSI("Windows 2015")))
+                 {
+                     Store (0x07DF, OSYS) /* \OSYS */
+                 }
