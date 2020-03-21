@@ -4,3 +4,7 @@
 2.battery.patch -- fix battery issues, used with RehabMAN battery kext<br>
 3.f7.f8.arrows.als.patch -- fix als sensor, F7,F8 and arrows keys to be used with AsusSMC for brightness control<br>
 4.touchpad.i2c.gpio.patch -- fix trackpad to work with gpio pinning with Voodooi2c kext<br>
+
+
+# Donate
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/serdeliuk)
