@@ -6,5 +6,5 @@
 4.touchpad.i2c.gpio.patch -- fix trackpad to work with gpio pinning with Voodooi2c kext<br>
 
 
-# Donate
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/serdeliuk)
