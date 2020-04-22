@@ -45,4 +45,4 @@ patch -p1 < 4.touchpad.i2c.gpio.patch
 
 ### Then compile back the DSDT.dsl to DSDT.aml
 `iasl -ve DSDT.dsl`
- -ve   Report only errors (ignore warnings and remarks)
+##### -ve   Report only errors (ignore warnings and remarks)
