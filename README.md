@@ -35,7 +35,7 @@ Firmware Error (ACPI): Could not resolve symbol [^^PEG0.PEGP.NLIM], AE_NOT_FOUND
 Firmware Error (ACPI): Could not resolve symbol [^^PEG0.PEGP.TGPU], AE_NOT_FOUND (20191018/dswload2-477)
 ```
 
-### Then apply all patches one by one, patched should be in the same folder as DSDT.dsl
+### Then apply all patches one by one, patches files should be in the same folder as DSDT.dsl
 ```
 patch -p1 < 1.OSI.darwin.windows10.patch
 patch -p1 < 2.battery.patch
