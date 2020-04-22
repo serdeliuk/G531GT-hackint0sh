@@ -16,7 +16,7 @@
 <br><br>
 
 ### In order to apply those patches you will need apica tools from here  https://acpica.org/downloads
-### To decompile the DSDT.aml and all other acpi tables, you need to run follwoing bash script inside the origin folder saved with F4 in clover
+### To decompile the DSDT.aml and all other acpi tables, you need to run following bash script inside the origin folder saved with F4 in clover
 
 ```
 #!/bin/bash
