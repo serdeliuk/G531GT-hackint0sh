@@ -8,6 +8,9 @@
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/serdeliuk) any donation is highly appreciated!
 
+## Those pathces are not compatible with MaciASL!!!
+
+
 ### In order to apply those patches you will need apica tools from here  https://acpica.org/downloads
 ### To decompile the DSDT.aml and all other acpi tables, you need to run follwoing bash script inside the origin folder saved with F4 in clover
 
