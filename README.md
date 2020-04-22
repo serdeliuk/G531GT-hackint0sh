@@ -8,8 +8,8 @@
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/serdeliuk) any donation is highly appreciated!
 
-# In order to apply those patches you will need apica tools from here  https://acpica.org/downloads
-# To decompile the DSDT.aml and all other acpi tables, you need to run follwoing bash script inside the origin folder saved with F4 in clover
+### In order to apply those patches you will need apica tools from here  https://acpica.org/downloads
+### To decompile the DSDT.aml and all other acpi tables, you need to run follwoing bash script inside the origin folder saved with F4 in clover
 
 ```
 #!/bin/bash
@@ -25,7 +25,7 @@ for ssdt in $ssdts
 done
 ```
 
-# The resulting DSDT.dsl will have some errors inside, fist lines simillar to the following ones should be removed from DSDT.dsl 
+### The resulting DSDT.dsl will have some errors inside, fist lines simillar to the following ones should be removed from DSDT.dsl 
 ```
 Firmware Error (ACPI): Could not resolve symbol [^PCI0.LPCB.EC0.ACNG], AE_NOT_FOUND (20191018/dswload-496)
 Firmware Error (ACPI): Could not resolve symbol [^^PEG0.PEGP.NLIM], AE_NOT_FOUND (20191018/dswload-496)
@@ -35,13 +35,13 @@ Firmware Error (ACPI): Could not resolve symbol [^^PEG0.PEGP.NLIM], AE_NOT_FOUND
 Firmware Error (ACPI): Could not resolve symbol [^^PEG0.PEGP.TGPU], AE_NOT_FOUND (20191018/dswload2-477)
 ```
 
-# Then apply all patches one by one, patched should be in the same folder as DSDT.dsl
+### Then apply all patches one by one, patched should be in the same folder as DSDT.dsl
 
 patch -p1 < 1.OSI.darwin.windows10.patch
 patch -p1 < 2.battery.patch
 patch -p1 < 3.f7.f8.arrows.als.patch
 patch -p1 < 4.touchpad.i2c.gpio.patch
 
-# Then compile back the DSDT.dsl to DSDT.aml
-iasl -ve DSDT.dsl
+### Then compile back the DSDT.dsl to DSDT.aml
+`iasl -ve DSDT.dsl`
  -ve   Report only errors (ignore warnings and remarks)
