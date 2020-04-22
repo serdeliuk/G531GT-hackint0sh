@@ -36,11 +36,12 @@ Firmware Error (ACPI): Could not resolve symbol [^^PEG0.PEGP.TGPU], AE_NOT_FOUND
 ```
 
 ### Then apply all patches one by one, patched should be in the same folder as DSDT.dsl
-
--`patch -p1 < 1.OSI.darwin.windows10.patch`
--`patch -p1 < 2.battery.patch`
--`patch -p1 < 3.f7.f8.arrows.als.patch`
--`patch -p1 < 4.touchpad.i2c.gpio.patch`
+```
+patch -p1 < 1.OSI.darwin.windows10.patch
+patch -p1 < 2.battery.patch
+patch -p1 < 3.f7.f8.arrows.als.patch
+patch -p1 < 4.touchpad.i2c.gpio.patch
+```
 
 ### Then compile back the DSDT.dsl to DSDT.aml
 `iasl -ve DSDT.dsl`
