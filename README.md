@@ -46,3 +46,6 @@ patch -p1 < 4.touchpad.i2c.gpio.patch
 ### Then compile back the DSDT.dsl to DSDT.aml
 `iasl -ve DSDT.dsl`
 ##### -ve   Report only errors (ignore warnings and remarks)
+
+#### you can follow the infos here
+##### https://www.tonymacx86.com/threads/info-asus-rog-strix-g531gt-hackintosh-mojave-install.287480/
