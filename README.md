@@ -25,7 +25,7 @@ for ssdt in $ssdts
 done
 ```
 
-### The resulting DSDT.dsl will have some errors inside, fist lines simillar to the following ones should be removed from DSDT.dsl 
+### The resulting DSDT.dsl will have some errors inside, fist lines simillar to the following ones which should be removed from DSDT.dsl 
 ```
 Firmware Error (ACPI): Could not resolve symbol [^PCI0.LPCB.EC0.ACNG], AE_NOT_FOUND (20191018/dswload-496)
 Firmware Error (ACPI): Could not resolve symbol [^^PEG0.PEGP.NLIM], AE_NOT_FOUND (20191018/dswload-496)
