@@ -1,3 +1,5 @@
+
+
 # Asus ROG STRIX G531GT DSDT patches
 
 1.OSI.darwin.windows10.patch -- replace "Windows 2015" with "Darwin"<br>
@@ -5,11 +7,13 @@
 3.f7.f8.arrows.als.patch -- fix als sensor, F7,F8 and arrows keys to be used with AsusSMC for brightness control<br>
 4.touchpad.i2c.gpio.patch -- fix trackpad to work with gpio pinning with Voodooi2c kext<br>
 
+<br><br>
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/serdeliuk) any donation is highly appreciated!
 
-## Those pathces are not compatible with MaciASL!!!
-
+<br><br>
+## Those patches are not compatible with MaciASL!!!
+<br><br>
 
 ### In order to apply those patches you will need apica tools from here  https://acpica.org/downloads
 ### To decompile the DSDT.aml and all other acpi tables, you need to run follwoing bash script inside the origin folder saved with F4 in clover
