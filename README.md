@@ -7,6 +7,10 @@
 
 ###### The old DSDT patches are now obsolete and are replaced by the hotpatches to improve stability. <br> However you can find all those old pacthes in `obsolete` directory.
 
+Integrated Virtual Bios MOD boot screen
+---
+![bootscreen](https://github.com/serdeliuk/hackint0sh/blob/master/bootmenu.gif)
+
 Use this thread for comments [G531GT Hackint0sh](https://www.tonymacx86.com/threads/info-asus-rog-strix-g531gt-hackintosh-mojave-and-or-catalina-install.287480/)
 <br><br>
 
