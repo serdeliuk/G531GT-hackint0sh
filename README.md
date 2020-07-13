@@ -1,5 +1,7 @@
 ## Asus ROG STRIX G531GT Hackintosh -- Clover HOT-patches
 ### You can install now both, Mojave and/or Catalina
+### You can disable/enable Nvidia video card easy than ever
+<br>
 
 ### EFI.zip [![download EFI.zip](https://img.shields.io/github/downloads/serdeliuk/hackint0sh/total)](https://github.com/serdeliuk/hackint0sh/releases/download/2/EFI.1.0.2.zip)
 #### This source code is licensed under [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html#preamble)
