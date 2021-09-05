@@ -1,9 +1,10 @@
 ## Asus ROG STRIX G531GT Hackintosh -- Clover HOT-patches
-### You can install now both, Mojave and/or Catalina
+### You can install all, Mojave, Catalina and/or BigSur with signle EFI and no reconfig.
 #### You can disable/enable Nvidia video card easy than ever
+##### This EFI is based on a pathed Clover 5139 that has OpenCOre 0.6.4 that allow to boot BigSur in SecureMode please review config-oc.file
 <br>
 
-### EFI.zip [![download EFI.zip](https://img.shields.io/github/downloads/serdeliuk/hackint0sh/total)](https://github.com/serdeliuk/hackint0sh/releases/download/6/EFI.zip)
+### EFI.zip [![download EFI.zip](https://img.shields.io/github/downloads/serdeliuk/hackint0sh/total)](https://github.com/serdeliuk/hackint0sh/releases/download/7/EFI.zip)
 #### This source code is licensed under [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html#preamble)
 #### Please read LICENSE.txt for more details
 
