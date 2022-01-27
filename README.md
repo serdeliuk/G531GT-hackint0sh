@@ -7,7 +7,13 @@
 ### EFI.zip [![download EFI.zip](https://img.shields.io/github/downloads/serdeliuk/hackint0sh/total)](https://github.com/serdeliuk/hackint0sh/releases/download/7/EFI.zip)
 #### This source code is licensed under [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html#preamble)
 #### Please read LICENSE.txt for more details
-
+---
+---
+# !!! WARNING!!!
+# I Found that the original ACPI tables contain sensitive data to our devices, please do not provide anywhere full ACPI tables.
+# If you already did this please remove them as quickly as possible.
+---
+---
 ###### The old DSDT patches are now obsolete and are replaced by the hotpatches to improve stability. <br> However you can find all those old pacthes in `obsolete` directory.
 
 Integrated Virtual Bios MOD boot screen
