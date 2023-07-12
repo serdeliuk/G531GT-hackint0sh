@@ -1,10 +1,10 @@
-### EFI.zip [![download EFI.zip](https://img.shields.io/github/downloads/serdeliuk/hackint0sh/total)](https://github.com/serdeliuk/hackint0sh/releases/download/9/EFI.zip)
+## Asus ROG STRIX G531GT Hackintosh -- Clover HOT-patches
+### You can install all, Mojave, Catalina, BigSur and/or Monterey with a single EFI and no reconfig.
 
+### EFI.zip [![download EFI.zip](https://img.shields.io/github/downloads/serdeliuk/hackint0sh/total)](https://github.com/serdeliuk/hackint0sh/releases/download/9/EFI.zip)
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/serdeliuk) any donation is highly appreciated!
 
-## Asus ROG STRIX G531GT Hackintosh -- Clover HOT-patches
-### You can install all, Mojave, Catalina, BigSur and/or Monterey with a single EFI and no reconfig.
 #### You can disable/enable Nvidia video card easy than ever
 ##### The 1.0.9 add support for macOS Monterey too
 - LCD backlight is broken atm.
